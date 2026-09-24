@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compile a Python file reported by an Edit or Write tool event."""
+"""Run the project linter for a Python file reported by an edit event."""
 
 import json
 import subprocess
@@ -29,14 +29,14 @@ def main() -> int:
     if file_path is None:
         return 0
     result = subprocess.run(
-        [sys.executable, "-m", "py_compile", str(file_path)],
+        [sys.executable, "-m", "ruff", "check", "--select", "E,F", str(file_path)],
         capture_output=True,
         text=True,
     )
     if result.returncode:
         print(result.stderr or result.stdout, file=sys.stderr, end="")
         return result.returncode
-    print(f"Python syntax check passed: {file_path}")
+    print(f"Ruff check passed: {file_path}")
     return 0
 
 

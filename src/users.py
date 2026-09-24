@@ -27,10 +27,14 @@ class UserRegistry:
         """Find a user by an exact, case-insensitive email match."""
         normalized_email = email.casefold()
         return next(
-            (user for user in self._users.values() if user.email.casefold() == normalized_email),
+            (
+                user
+                for user in self._users.values()
+                if user.email.casefold() == normalized_email
+            ),
             None,
         )
 
     def display_name(self, user: User) -> str:
         """Return a short label for a user."""
-        return user.name
+        return user.full_name

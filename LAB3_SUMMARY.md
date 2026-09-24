@@ -6,7 +6,7 @@
 - `.claude/project.md` - AntiGravity project context for new sessions.
 - `.claude/hooks/block-dangerous` - PreToolUse safety hook.
 - `.claude/hooks/session-start` - SessionStart context hook.
-- `.claude/hooks/check-python` - PostToolUse Python syntax hook.
+- `.claude/hooks/check-python` - PostToolUse Ruff lint hook.
 
 ## Working Hooks
 
@@ -14,8 +14,7 @@
   `curl ... | bash`. It exits with code 2 when a command is blocked.
 - `SessionStart` prints `.claude/project.md`.
 - `PostToolUse` checks edited or written `.py` files with
-  `python -m py_compile`.
-- No Ruff or other project linter was installed, so no new linter was added.
+  `python -m ruff check --select E,F` and returns lint errors to the agent.
 
 ## Verification
 
@@ -29,13 +28,13 @@ python .claude/hooks/session-start
 ```
 
 The first command prints `Blocked dangerous command (rm -rf/rm -fr).` and
-returns exit code 2. A syntax error is reported by `py_compile`, for example:
-`SyntaxError: invalid syntax`.
+returns exit code 2. The third command runs Ruff and reports either lint
+errors or `Ruff check passed: src\products.py`.
 
 ## Commands Used
 
-- `python -m py_compile`
-- `python -m pytest -q` (not available in the system Python environment)
+- `python -m ruff check --select E,F`
+- `python -m pytest -q`
 - JSON and hook smoke tests using PowerShell pipelines
 - Git status and remote inspection
 

@@ -7,6 +7,8 @@ from .models import Order, Product
 
 def average_product_price(products: list[Product]) -> Decimal:
     """Return the average price in a product collection."""
+    if not products:
+        return Decimal("0")
     total = sum(float(product.price) for product in products)
     return Decimal(str(total / len(products)))
 

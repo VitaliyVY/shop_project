@@ -4,6 +4,7 @@
 
 - `.claude/settings.json` - Claude Code hook configuration.
 - `.claude/project.md` - AntiGravity project context for new sessions.
+- `.claude/ticket.md` - Tracker ticket snapshot injected at session start.
 - `.claude/hooks/block-dangerous` - PreToolUse safety hook.
 - `.claude/hooks/session-start` - SessionStart context hook.
 - `.claude/hooks/check-python` - PostToolUse Ruff lint hook.
@@ -12,7 +13,7 @@
 
 - `PreToolUse` blocks `rm -rf`/`rm -fr`, `chmod 777`, and `curl ... | sh` or
   `curl ... | bash`. It exits with code 2 when a command is blocked.
-- `SessionStart` prints `.claude/project.md`.
+- `SessionStart` prints `.claude/ticket.md` as ticket context.
 - `PostToolUse` checks edited or written `.py` files with
   `python -m ruff check --select E,F` and returns lint errors to the agent.
 
@@ -51,3 +52,7 @@ git push -u origin feature/antigravity-hooks
 ```
 
 Then open a Pull Request from `feature/antigravity-hooks` to `main` in GitHub.
+
+The repository contains the ticket snapshot and hook implementation, but an
+external GitHub MCP server still must be configured in the agent environment.
+No access token is stored in this repository.

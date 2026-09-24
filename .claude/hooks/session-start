@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Print the project context used by the SessionStart hook."""
+"""Print the ticket context used by the SessionStart hook."""
 
 from pathlib import Path
 
 
 def main() -> int:
-    project_file = Path(__file__).resolve().parents[1] / "project.md"
-    print(project_file.read_text(encoding="utf-8"), end="")
+    ticket_file = Path(__file__).resolve().parents[1] / "ticket.md"
+    print(ticket_file.read_text(encoding="utf-8"), end="")
     return 0
 
 

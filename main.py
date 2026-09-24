@@ -22,12 +22,16 @@ def main() -> None:
     order = orders.create_order(
         order_id=1,
         user=customer,
-        requested_items=[(catalog.find_by_name("headphones")[0], 1), (catalog.find_by_name("cable")[0], 2)],
+        requested_items=[
+            (catalog.find_by_name("headphones")[0], 1),
+            (catalog.find_by_name("cable")[0], 2),
+        ],
     )
 
     print(f"Customer: {customer.full_name}")
     print(f"Order total: {format_money(order.total())}")
-    print(f"Average catalog price: {format_money(average_product_price(catalog.all_products()))}")
+    average_price = format_money(average_product_price(catalog.all_products()))
+    print(f"Average catalog price: {average_price}")
     print(f"Units sold: {total_units_sold(orders.all_orders())}")
 
 

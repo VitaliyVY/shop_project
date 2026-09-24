@@ -1,7 +1,5 @@
 from decimal import Decimal
 
-import pytest
-
 from src.models import Product
 from src.statistics import average_product_price, total_units_sold
 

@@ -3,6 +3,7 @@
 ## Created Files
 
 - `.claude/settings.json` - Claude Code hook configuration.
+- `.vscode/mcp.json` - VS Code configuration for the official remote GitHub MCP server.
 - `.claude/project.md` - AntiGravity project context for new sessions.
 - `.claude/ticket.md` - Tracker ticket snapshot injected at session start.
 - `.claude/hooks/block-dangerous` - PreToolUse safety hook.
@@ -53,6 +54,7 @@ git push -u origin feature/antigravity-hooks
 
 Then open a Pull Request from `feature/antigravity-hooks` to `main` in GitHub.
 
-The repository contains the ticket snapshot and hook implementation, but an
-external GitHub MCP server still must be configured in the agent environment.
-No access token is stored in this repository.
+The repository contains the ticket snapshot, hook implementation, and VS Code
+configuration for the official remote GitHub MCP server. The first use still
+requires OAuth approval in VS Code. No access token is stored in this
+repository.

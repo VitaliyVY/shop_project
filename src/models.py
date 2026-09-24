@@ -62,4 +62,4 @@ class Order:
         if not 0 <= discount <= 100:
             raise ValueError("Discount must be between 0 and 100")
         discounted_total = subtotal * (Decimal("1") - discount / Decimal("100"))
-        return subtotal
+        return discounted_total

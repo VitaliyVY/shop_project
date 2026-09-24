@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Compile a Python file reported by an Edit or Write tool event."""
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+
+def changed_path(event: object) -> Path | None:
+    if not isinstance(event, dict):
+        return None
+    tool_input = event.get("tool_input", {})
+    if not isinstance(tool_input, dict):
+        return None
+    value = tool_input.get("file_path") or tool_input.get("path")
+    if not isinstance(value, str) or not value.lower().endswith(".py"):
+        return None
+    return Path(value)
+
+
+def main() -> int:
+    try:
+        event = json.load(sys.stdin)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return 0
+
+    file_path = changed_path(event)
+    if file_path is None:
+        return 0
+    result = subprocess.run(
+        [sys.executable, "-m", "py_compile", str(file_path)],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode:
+        print(result.stderr or result.stdout, file=sys.stderr, end="")
+        return result.returncode
+    print(f"Python syntax check passed: {file_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
